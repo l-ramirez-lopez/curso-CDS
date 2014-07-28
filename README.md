@@ -1,9 +1,13 @@
-# resemble: Regression and similarity evaluation for memory-based learning in spectral chemometrics
-_Leonardo Ramirez-Lopez & Antoine Stevens_
+# Cartografia Digital de Suelos (Pedometria – conceptos y aplicaciones)
 
-Visit the [`resemble` site here](http://l-ramirez-lopez.github.io/resemble/)
+_Leonardo Ramirez-Lopez_
 
-For the development version, download the [binary (.zip) file from here](https://github.com/l-ramirez-lopez/resemble/archive/resemble_1.1.2.zip) or the [source file (.tar.gz) from here](https://github.com/l-ramirez-lopez/resemble/archive/1.1.2.tar.gz). Remember you should have [R>=3.0.2](http://cran.r-project.org/). Suppose you downloaded the binary file to 'C:/MyFolder/', then you should be able to install the package as follows:
+Hola, este repositoriuo contiene algunos de los archivos y ejemplos que serán utilizados durante el taller del curso de cartografía digital de suelos.
+Lo primero que se debe hacer es instalar los siguientes programas los cuales son requeridos para el desarrollo del curso:
+- [`R`](http://www.r-project.org/)
+- [R Studio](http://www.rstudio.com/)
+- [SAGA (System for Automated Geoscientific Analyses)](http://www.saga-gis.org/en/index.html)
+
 
 If you do not have the following packages installed, you should install them first
 ```
