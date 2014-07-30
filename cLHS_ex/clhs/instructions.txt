@@ -1,0 +1,40 @@
+Conditioned Latin hypercube sampling
+
+Selecting n no. samples from data N, so the n samples form a Latin hypercube.
+Note this version only selects from continuous data.
+
+Datafile in text format, no heading
+Heading, if non-numerals will be skipped (ignored)
+If heading is numerals, it could be treated as data, so be careful!
+- If data has a coordinate (x,y) set icord = 1, the file format is in x,y, variable 1, 2, ....
+Note: the coordinates will not be used in forming the hypercube, if want to include x,y in the hypercube use the selection below.
+- If only contains the variables (set icord=0), the file format is in variable 1, 2, ....
+
+Note: data are read in single precision only!
+
+Modify the "clhs_input.txt" file for the parameter to run the program.
+
+$lhi
+infile='data.txt'				! input data file (see above)	
+outfile='out_data.txt'				! output file
+nvar=3						! number of variables
+nsam=200					! number of samples
+icord=0						! icord =1 datafile contains coordinates, otherwise icord=0
+w1=1.0						! optimisation weight to data
+w2=0.5						! optimisation weight to correlations among data varaiables
+niter=20000					! number of iterations (usually greater than 20 000 to get a good hypercube)
+tfactr=0.99					! anneal cooling schedule (no need to modify)
+$end
+
+The output files gives the samples, and also index (position) in the datafile
+If coordinates are specified the output will be index (row no.), x, y, variables... otherwise: index (row no.), variables...
+A file calle "output.txt" produces the Quantiles, correlations, and occupancy of the hypercube
+A file calle "iter.txt" gives the iterations and residuals.
+
+Note the program iterates to minimise the following objective function:
+O = w1 * O1 + w2 * O2
+w1, and w2 is the weight to the objective function O1 and O2.
+O1 = 1/(n*n_var) * Sum_i=1 to n [Sum_j=1 to n_var [ abs(h(i,j)-1) ]]
+	where n is no. samples, n_var is no. variables, h is the occupancy of the hypercube
+O2 = 1/(nvar*nvar) * Sum_j=1 to n_var [Sum_k=1 to n_var [ abs(ch(j,k)-c(j,k)) ]]
+ 	where ch is the variables correlation of the sampled points and c is correlation of the original data.

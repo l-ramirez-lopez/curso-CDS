@@ -1,0 +1,11 @@
+$lhi
+infile='Scores_Leo2.txt'				! input file	data file x,y, variables
+outfile='MisMuestrasCalibracion.txt'				! output file
+nvar=6						! no. variables
+nsam=50		 			! no. samples to select
+icord=0						! datafile contains coordinates in the first 2 cols, 1=yes, 0=no
+w1=1.0						! weight to data
+w2=0.5						! weight to correlations
+niter=20000					! no. iterations
+tfactr=0.95					! anneal cooling schedule (no need to modify)
+$end
