@@ -60,6 +60,22 @@ nombres_covariables <- colnames(covariatesPoints)
 formula.arcilla <- as.formula(paste("Arg ~ 1 + ", paste(nombres_covariables, collapse = "+")))
 
 # ajusta el modelo
-modelo_arcilla <- lmrob(formula = formula.arcilla, data = listo.calibracion[(!duplicated(listo.calibracion$ID)),])
+modelo_arcilla <- lmrob(formula = formula.arcilla, 
+                        data = listo.calibracion[complete.cases(listo.calibracion),],
+                        control = lmrob.control(k.max = 10000, rel.tol = 1e-6, cov = ".vcov.w"))
 summary(modelo_arcilla)
+
+# Remueve variables problematicas
+formula.arcilla2 <- as.formula(paste("Arg ~ 1 + ", paste(nombres_covariables, collapse = "+"), "-valleydepth-valleyindex-mincurv"))
+
+# Crea un nuevo modelo sin esas variables problematicas
+modelo_arcilla2 <- lm(formula = formula.arcilla2, 
+                      data = listo.calibracion[complete.cases(listo.calibracion),])
+
+summary(modelo_arcilla2)
+
+# Realiza una seleccion de variables basado en la tecnica step-wise
+modelo_arcilla3 <- step(modelo_arcilla2)
+summary(modelo_arcilla3)
+
 ```
