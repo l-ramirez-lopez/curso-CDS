@@ -78,4 +78,38 @@ summary(modelo_arcilla2)
 modelo_arcilla3 <- step(modelo_arcilla2)
 summary(modelo_arcilla3)
 
+#--- 5. validacion de los modelos de regresion linear multiple ----
+# Lee la tabla de los datos de validacin de los modelos espaciales
+validacionEspacial <- read.table(file = "Validacion_mod_espacial.txt", header = T, sep="\t")
+
+# Extrae las covariables para los puntos de validacion
+covariatesPointsVal <- extract(x = covariatesRasters, y = validacionEspacial[, c("Xc", "Yc")])
+# convierte los datos a un formato especial ("data.frame")
+covariatesPointsVal <- as.data.frame(covariatesPointsVal)
+
+# reliza las predicciones para los puntos de validacion con base en el 
+# modelo predictivo de arcilla y las cpvariables
+prediccionArg <- predict(modelo_arcilla3, covariatesPointsVal)
+
+# grafica lo predicho Vs lo observado
+plot(validacionEspacial$Arg, prediccionArg, 
+     xlab = "Arcilla observada (%)", 
+     ylab = "Arcilla predicha (%)",
+     ylim = c(0, 80),
+     xlim = c(0, 80))
+abline(a= 0, b=1, col = "red")
+
+
+#--- 6. Creamos los mapas digitales de arcilla ----
+# Este ejemplo es unicamente didactico
+# (Los mapas son creados aunque los modelos presentan un desempeno predictivo probe)
+
+mdarcilla <- predict(covariatesRasters, modelo_arcilla3)
+
+# podemos entonces graficar el mapa
+plot(mdarcilla)
+
+# podemos exportar el mapa a un archivo tif
+writeRaster(mdarcilla, filename = "MD_Arcilla.tif", format="GTiff")
+
 ```
